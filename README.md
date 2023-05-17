@@ -1,0 +1,1 @@
+Fake posts for blog project using Next.js, Tailwind and Typescript
