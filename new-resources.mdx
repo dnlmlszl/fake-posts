@@ -1,0 +1,57 @@
+---
+title: 'Exploring Koa.js with Deno: Building a Modern Backend'
+date: '2023-07-15'
+tags: ['deno', 'koa.js', 'backend', 'javascript', 'typescript']
+---
+
+# Exploring Koa.js with Deno: Building a Modern Backend
+
+In the evolving world of web development, the quest for more efficient and scalable backend solutions is perpetual. With the advent of [Deno](https://deno.land/), a modern JavaScript/TypeScript runtime, and [Koa.js](https://koajs.com/), a flexible Node.js web framework, building server-side applications has taken an intriguing turn.
+
+<CustomImage
+  src="https://raw.githubusercontent.com/dnlmlszl/fake-posts/main/images/deno.webp"
+  alt="Koa.js and Deno"
+/>
+
+## Introduction to Deno
+
+Deno, created by Ryan Dahl, the original creator of Node.js, addresses many of Node.js's shortcomings while introducing several modern features:
+
+- Secure by default
+- Supports TypeScript out of the box
+- Ships with a single executable
+
+Deno's approach to module management and its emphasis on security make it an excellent choice for building web applications.
+
+## Why Koa.js with Deno?
+
+Koa.js, known for its minimalistic approach and flexibility, offers a great way to build web applications and APIs. When combined with Deno, Koa.js benefits from Deno's modern features, such as top-level await and native TypeScript support.
+
+<CustomImage
+  src="https://raw.githubusercontent.com/dnlmlszl/fake-posts/main/images/koa.jpeg"
+  alt="Koa.js Features"
+/>
+
+## Setting Up a Koa.js Server in Deno
+
+To get started with Koa.js in Deno, you first need to set up your Deno environment. Here's a simple guide:
+
+1. **Install Deno**: Follow the instructions on the [Deno installation page](https://deno.land/#installation).
+
+2. **Create Your Koa.js Server**: Write your Koa.js server script using Deno's module imports.
+
+3. **Run Your Server**: Use the `deno run` command with the necessary permissions.
+
+## Example Code
+
+```typescript
+import Koa from 'https://deno.land/x/koa/mod.ts';
+
+const app = new Koa();
+
+app.use((ctx) => {
+  ctx.body = 'Hello from Koa in Deno!';
+});
+
+app.listen(3000);
+```
