@@ -60,7 +60,7 @@ app.listen(3000);
 
 Koa's real power lies in its middleware framework. Here's how you can integrate custom middleware for logging, error handling, and more.
 
-```
+```javascript
 app.use(async (ctx, next) => {
   try {
     await next();
