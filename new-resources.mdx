@@ -55,3 +55,27 @@ app.use((ctx) => {
 
 app.listen(3000);
 ```
+
+## Integrating Middleware
+
+Koa's real power lies in its middleware framework. Here's how you can integrate custom middleware for logging, error handling, and more.
+
+```
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.body = err.message;
+    ctx.app.emit('error', err, ctx);
+  }
+});
+```
+
+A short video example about Deno
+
+<Video id="3Vs0ekdI2gE" />
+
+## Conclusion
+
+Combining Koa.js with Deno offers a modern approach to building backend applications. The simplicity of Koa.js and the robust features of Deno create a powerful duo for developers looking to build efficient and secure web applications.
