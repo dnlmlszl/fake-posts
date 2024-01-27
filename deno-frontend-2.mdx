@@ -1,0 +1,180 @@
+---
+title: 'Building a Frontend Application with Integrated API Using Deno 2.0'
+date: '2024-01-26'
+tags: ['Deno', 'React', 'Vite', 'API', Typescript]
+---
+
+# Enhancing React Frontend Development with Integrated API in Deno 2.0
+
+Following our previous insights into implementing a basic backend for React applications in Deno-land, today we'll delve into the advanced aspects of building the frontend.
+
+## Step 1: Configuring Development Environment in vite.config.tms
+
+To incorporate essential routing in our application, we're utilizing key packages as follows:
+
+```typescript
+import { defineConfig } from 'npm:vite@^5.0.10';
+import react from 'npm:@vitejs/plugin-react@^4.2.1';
+
+import 'npm:react@^18.2.0';
+import 'npm:react-dom@^18.2.0';
+import 'npm:react-router-dom@^6.4';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+});
+```
+
+This setup ensures a robust and flexible routing system, vital for modern web applications.
+
+## Step 2: Implementing Basic Routing in App.tsx
+
+Utilizing the data.json filled with fascinating dinosaur data from Deno-land, we structure our React routing as such:
+
+```json
+
+{
+    "name": "Aardonyx",
+    "description": "An early stage in the evolution of sauropods."
+},
+
+```
+
+This approach seamlessly integrates dynamic data rendering with user-friendly navigation.
+
+```typescript
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
+import Index from './pages/Index';
+import Dinosaur from './pages/Dinosaur';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/:dinosaur" element={<Dinosaur />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+## Step 3: Crafting Essential Pages
+
+Establish a pages directory within the src folder, crafting two pivotal TypeScript React components - Index.tsx for the homepage and Dinosaur.tsx for rendering individual dinosaur data:
+
+```bash
+
+mkdir src/pages && touch src/pages/Index.jsx src/pages/Dinosaur.jsx
+```
+
+Index.tsx is your gateway to the dinosaur world:
+
+```typescript
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+
+const Index = () => {
+  const [dinos, setDinos] = useState([]);
+
+  useEffect(() => {
+    fetch('https://hungry-cow-59-qmaa2d1r0gkr.deno.dev/api')
+      .then(async (response) => await response.json())
+      .then((json) => setDinos(json));
+  }, []);
+
+  return (
+    <main>
+      <h1>Welcome to the Dinosaur app</h1>
+      <p>Click on a dinosaur below to learn more</p>
+      <div>
+        {dinos.map((dino) => {
+          return (
+            <div key={dino.name}>
+              <Link to={`/${dino.name.toLowerCase()}`}>{dino.name}</Link>
+            </div>
+          );
+        })}
+      </div>
+    </main>
+  );
+};
+export default Index;
+```
+
+Dinosaur.tsx offers an in-depth view of each prehistoric creature:
+
+```typescript
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+
+const Dinosaur = () => {
+  const { dinosaur } = useParams();
+  const [dino, setDino] = useState({});
+
+  useEffect(() => {
+    fetch(`https://hungry-cow-59-qmaa2d1r0gkr.deno.dev/api/${dinosaur}`)
+      .then(async (response) => await response.json())
+      .then((json) => setDino(json));
+  }, []);
+
+  return (
+    <div className="dinosaur">
+      <h1>{dino.name}</h1>
+      <p>{dino.description}</p>
+      <Link to="/">See all</Link>
+    </div>
+  );
+};
+export default Dinosaur;
+```
+
+## Step 4: Launching the Server and Exploring the Application
+
+Kickstart your Deno server and immerse yourself in the localhost-dinosaur universe:
+
+```bash
+
+deno task start
+
+```
+
+Discovering the API
+
+With your server active, explore the dynamic list of dinosaurs and their detailed pages:
+
+<CustomImage
+  src="https://raw.githubusercontent.com/dnlmlszl/fake-posts/main/images/01.27/Index.tsx.png"
+  alt="Deno Frontend Setup Vite Home Page"
+/>
+
+<CustomImage
+  src="https://raw.githubusercontent.com/dnlmlszl/fake-posts/main/images/01.27/Detail.png"
+  alt="Deno Setup Vite Dino Detail Page"
+/>
+
+This innovative setup epitomizes the harmony between Deno, React, and Vite, revolutionizing the development of sophisticated web applications.
+
+## Recap of Our Journey
+
+In our adventurous journey through Deno-land, we've successfully navigated the realms of backend and frontend development.
+We began by setting up a Vite-based React application, integrating an API using Deno's efficient runtime environment.
+Our journey took us through configuring the development environment in vite.config.ts, implementing basic routing in App.tsx, and creating engaging pages to display our dinosaur data.
+The result is a dynamic, user-friendly web application that seamlessly combines the power of Deno with the versatility of React and Vite.
+
+### Looking Ahead
+
+Next time, we'll dive into the crucial steps of preparing and deploying your web application.
+We'll explore how to ensure your app is ready for production and the best practices for deploying it effectively.
+
+Stay tuned for more insights and tips to make your web development journey smoother and more efficient!
