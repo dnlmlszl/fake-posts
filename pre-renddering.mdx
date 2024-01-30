@@ -1,7 +1,7 @@
 ---
 title: 'TypeScript and Golang'
 date: '2023-05-15'
-tags: ['next.js', 'nextjs', 'golang', 'typescript']
+tags: ['next.js', 'nextjs', 'typescript']
 ---
 
 # Using Go and TypeScript in Next.js
@@ -21,51 +21,68 @@ Combining Go and TypeScript allows us to leverage the strengths of both language
 To get started, make sure you have Node.js and Go installed on your machine. Then, follow these steps:
 
 1. Create a new Next.js project:
+
    ```bash
    npx create-next-app my-app
    cd my-app
 
+   ```
+
 2. Initialize Go modules in your project directory:
-    ```bash
-    go mod init github.com/your-username/my-app
+
+   ```bash
+   go mod init github.com/your-username/my-app
+
+   ```
 
 3. Install the Go and TypeScript dependencies:
-    ```bash
-    go get github.com/gofiber/fiber/v2
-    go get github.com/your-username/my-app/types
+
+   ```bash
+   go get github.com/gofiber/fiber/v2
+   go get github.com/your-username/my-app/types
+
+   ```
 
 4. Create a Go server file (server.go) in your project's root directory, and implement a basic server using the Fiber framework:
-    ```go
-    package main
 
-    import (
-        "github.com/gofiber/fiber/v2"
-        "github.com/your-username/my-app/types"
-    )
+   ```go
+   package main
 
-    func main() {
-        app := fiber.New()
+   import (
+       "github.com/gofiber/fiber/v2"
+       "github.com/your-username/my-app/types"
+   )
 
-        app.Get("/", func(c *fiber.Ctx) error {
-            message := types.Message{
-                Text: "Hello, world!",
-            }
-            return c.JSON(message)
-        })
+   func main() {
+       app := fiber.New()
 
-        app.Listen(":3000")
-    }
+       app.Get("/", func(c *fiber.Ctx) error {
+           message := types.Message{
+               Text: "Hello, world!",
+           }
+           return c.JSON(message)
+       })
+
+       app.Listen(":3000")
+   }
+
+   ```
 
 5. Create a TypeScript file (api.ts) in the pages/api directory, and implement a simple API endpoint that communicates with the Go server:
-    ```typescript
-    import { NextApiRequest, NextApiResponse } from 'next'
 
-    export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-        const response = await fetch('http://localhost:3000')
-        const message = await response.json()
+   ```typescript
+   import { NextApiRequest, NextApiResponse } from 'next';
 
-        res.status(200).json({ message })
-    }
+   export default async function handler(
+     req: NextApiRequest,
+     res: NextApiResponse
+   ) {
+     const response = await fetch('http://localhost:3000');
+     const message = await response.json();
+
+     res.status(200).json({ message });
+   }
+   ```
 
 6. Start the Go server by running go run server.go in your project's root directory.
 7. Start the Next.js development server by running npm run dev.
